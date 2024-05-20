@@ -3,15 +3,14 @@ package adventureGame;
 import java.util.Scanner;
 
 public class Store extends Location{
-    private Player player;
+    private static Player player;
     Scanner input = new Scanner(System.in);
 
     public Store(Player player) {
         super(player);
-        this.player = player;
     }
 
-    public void entered() {
+    public void entered(Player player) {
         System.out.println("Satıcıya hoşgeldiniz!");
         System.out.println("Mevcut altin miktarınız: " + player.getGold());
         System.out.println("Ne almak istersiniz?");
@@ -23,10 +22,10 @@ public class Store extends Location{
 
         switch (select) {
             case 1:
-                buyWeapon();
+                buyWeapon(player);
                 break;
             case 2:
-                buyArmor();
+                buyArmor(player);
                 break;
             case 3:
                 System.out.println("Çıkış yapılıyor...");
@@ -38,7 +37,7 @@ public class Store extends Location{
         }
     }
 
-    private void buyWeapon(){
+    private void buyWeapon(Player player){
         System.out.println("Ne almak istersiniz?");
         System.out.println("1. Tabanca (25 altın)");
         System.out.println("2. Kılıç (35 altın)");
@@ -51,59 +50,38 @@ public class Store extends Location{
             case 1:
                 if (player.getGold() >= 25) {
                     player.setGold(player.getGold() - 25);
-                    if(player.isHasWeapon()){
-                        player.setAttack(player.getAttack() - player.getOldWeaponDamage());
-                        player.setAttack(player.getAttack() + 2);
-                    }else{
-                        player.setOldWeaponDamage(2);
-                        player.setAttack(player.getAttack() + 2);
-                        player.setHasWeapon(true);
-                    }
+                    Weapon(player,2);
                     System.out.println("Tabanca satın alındı. Kalan altın miktarınız: " + player.getGold());
-                    entered();
+                    entered(player);
                 } else {
                     System.out.println("Yetersiz altın miktarı!");
-                    entered();
+                    entered(player);
                 }
                 break;
             case 2:
                 if (player.getGold() >= 35) {
                     player.setGold(player.getGold() - 35);
-                    if(player.isHasWeapon()){
-                        player.setAttack(player.getAttack() - player.getOldWeaponDamage());
-                        player.setAttack(player.getAttack() + 3);
-                    }else{
-                        player.setOldWeaponDamage(3);
-                        player.setAttack(player.getAttack() + 3);
-                        player.setHasWeapon(true);
-                    }
+                    Weapon(player,3);
                     System.out.println("Kılıç satın alındı. Kalan altın miktarınız: " + player.getGold());
-                    entered();
+                    entered(player);
                 } else {
                     System.out.println("Yetersiz altın miktarı!");
-                    entered();
+                    entered(player);
                 }
                 break;
             case 3:
                 if (player.getGold() >= 45) {
                     player.setGold(player.getGold() - 45);
-                    if(player.isHasWeapon()){
-                        player.setAttack(player.getAttack() - player.getOldWeaponDamage());
-                        player.setAttack(player.getAttack() + 4);
-                    }else{
-                        player.setOldWeaponDamage(4);
-                        player.setAttack(player.getAttack() + 4);
-                        player.setHasWeapon(true);
-                    }
+                    Weapon(player,7);
                     System.out.println("Tüfek satın alındı. Kalan altın miktarınız: " + player.getGold());
-                    entered();
+                    entered(player);
                 } else {
                     System.out.println("Yetersiz altın miktarı!");
-                    entered();
+                    entered(player);
                 }
                 break;
             case 4:
-                entered();
+                entered(player);
                 break;
             default:
                 System.out.println("Geçersiz seçim!");
@@ -111,7 +89,7 @@ public class Store extends Location{
         }
     }
 
-    private void buyArmor(){
+    private void buyArmor(Player player){
         System.out.println("Ne almak istersiniz?");
         System.out.println("1. Hafif (15 altın)");
         System.out.println("2. Orta (25 altın)");
@@ -124,63 +102,65 @@ public class Store extends Location{
             case 1:
                 if (player.getGold() >= 15) {
                     player.setGold(player.getGold() - 15);
-                    if(player.isHasArmor()){
-                        player.setDefense(player.getDefense() - player.getOldArmorValue());
-                        player.setDefense(player.getDefense() + 1);
-                    }else{
-                        player.setOldWeaponDamage(1);
-                        player.setDefense(player.getAttack() + 1);
-                        player.setHasArmor(true);
-                    }
+                    Armor(player,2);
                     System.out.println("Hafif zirh satın alındı. Kalan altın miktarınız: " + player.getGold());
-                    entered();
+                    entered(player);
                 } else {
                     System.out.println("Yetersiz altın miktarı!");
-                    entered();
+                    entered(player);
                 }
                 break;
             case 2:
                 if (player.getGold() >= 25) {
                     player.setGold(player.getGold() - 25);
-                    if(player.isHasArmor()){
-                        player.setDefense(player.getDefense() - player.getOldArmorValue());
-                        player.setDefense(player.getDefense() + 3);
-                    }else{
-                        player.setOldWeaponDamage(3);
-                        player.setDefense(player.getAttack() + 3);
-                        player.setHasArmor(true);
-                    }
+                    Armor(player,3);
                     System.out.println("Orta zirh satın alındı. Kalan altın miktarınız: " + player.getGold());
-                    entered();
+                    entered(player);
                 } else {
                     System.out.println("Yetersiz altın miktarı!");
-                    entered();
+                    entered(player);
                 }
                 break;
             case 3:
                 if (player.getGold() >= 40) {
                     player.setGold(player.getGold() - 40);
-                    if(player.isHasArmor()){
-                        player.setDefense(player.getDefense() - player.getOldArmorValue());
-                        player.setDefense(player.getDefense() + 5);
-                    }else{
-                        player.setOldWeaponDamage(5);
-                        player.setDefense(player.getAttack() + 5);
-                        player.setHasArmor(true);
-                    }
+                    Armor(player,5);
                     System.out.println("Agir zirh satın alındı. Kalan altın miktarınız: " + player.getGold());
-                    entered();
+                    entered(player);
                 } else {
                     System.out.println("Yetersiz altın miktarı!");
-                    entered();
+                    entered(player);
                 }
                 break;
             case 4:
-                entered();
+                entered(player);
                 break;
             default:
                 System.out.println("Geçersiz seçim!");
                 break;
+        }
+    }
+
+    public void Armor(Player player,int defense){
+        if(player.isHasArmor()){
+            player.setDefense(player.getDefense() - player.getOldArmorValue());
+            player.setDefense(player.getDefense() + defense);
+        }else{
+            player.setOldArmorValue(defense);
+            player.setDefense(player.getDefense() + defense);
+            player.setHasArmor(true);
+        }
+
+    }
+
+    public void Weapon(Player player,int attack){
+        if(player.isHasWeapon()){
+            player.setAttack(player.getAttack() - player.getOldWeaponDamage());
+            player.setAttack(player.getAttack() + attack);
+        }else{
+            player.setOldWeaponDamage(attack);
+            player.setAttack(player.getAttack() + attack);
+            player.setHasWeapon(true);
         }
     }
 

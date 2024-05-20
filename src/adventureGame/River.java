@@ -1,16 +1,28 @@
 package adventureGame;
 
-import java.util.Random;
-
 public class River extends Location {
     private Player player;
+    private boolean isRiver;
+
 
     public River(Player player) {
         super(player);
     }
 
+    public boolean isRiver() {
+        return isRiver;
+    }
+
+    public void setRiver(boolean river) {
+        this.isRiver = river;
+    }
+
+
     public void collect(){
-        getPlayer().getInventory().setWater(true);
+        if (player.isAlive()) {
+            getPlayer().getInventory().setWater(true);
+            setRiver(false);
+        }
     }
 
 
