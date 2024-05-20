@@ -159,7 +159,7 @@ public class Player {
     public void samurai() {
         setAttack(5);
         setDefense(0);
-        setHealth(10000);
+        setHealth(21);
         setGold(15);
         setBaseHealth(21);
         setAlive(true);
